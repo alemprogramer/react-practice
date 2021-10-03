@@ -1,16 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-function Viewer({images,...props}) {
-    const [files, setFiles] = useState({});
+function Viewer({ images}) {
     return (
         <article>
             <span>To Upload</span>
             <section>
-                {Object.keys(files).map((fileName, index) => {
-                    let file = files[fileName];
+                {images.map((fileName, index) => {
+                    let file = images[fileName];
                     let isImageFile = file.type.split("/")[0] === "image";
                     return (
-                        <section key={index}>
+                        <section key={fileName}>
                             <div>
                                 {isImageFile && (
                                     <img

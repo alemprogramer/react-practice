@@ -1,0 +1,54 @@
+.containers{
+    border: 2px dotted lightgray;
+    border-radius: 6px;
+    position: relative;    
+    background-color: white;
+    transition: all linear 0.4s;
+    margin: 25px 0 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 120px;
+}
+
+.containers:hover {
+    box-shadow: -1px 6px 22px -6px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: -1px 6px 22px -6px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px 6px 22px -6px rgba(0, 0, 0, 0.75);
+    border: 2px solid lightgray;
+}
+
+.containers .form-label{
+    color: #ccc;
+}
+
+.bigContainer {
+    padding: 35px 20px;
+}
+
+.mini-container{
+    padding: 5% 2%;
+    width: 20%;
+}
+
+.containers:hover .form-label{
+    color: #696969;
+}
+.uploader{
+    text-transform: none;
+    font-size: 18px;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    cursor: pointer;
+
+}
+
+.uploader:focus {
+    outline: none;
+}
