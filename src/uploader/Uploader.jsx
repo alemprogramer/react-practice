@@ -11,7 +11,7 @@ import {
     FileMetaData,
     RemoveFileIcon,
     InputLabel
-} from "./file-upload.styles";
+} from "./uploader.style.js";
 
 const fileSize = 500000;
 function Uploader({
@@ -46,7 +46,7 @@ function Uploader({
     };
     /**
      * Custom Function.
-     * As we've taken the state as an Object, we've to convert it into an array to push it on DB.
+     * As we've taken the state as an Object, we've to convert it into an array to push it on any DB.
      */
     const objToArray=(n)=>{
         Object.keys(n).map((d)=>n[d])
@@ -54,13 +54,18 @@ function Uploader({
     
     /**
      * Custom Function.
-     * As this File Drag 'n Drop component is/will be a child component of 
+     * As this File Drag 'n Drop component is/will be a child component of a Paren (Form) Component,
+     * We'll have to lift the state up.
      */
     const callUpdate = (files) => {
         const arrayFiles = objToArray(files);
         updateFile(arrayFiles);
     };
-
+    
+    /**
+     * Custom Function.
+     * Traverse the files and returns an object of file
+     */
     const pushFile = (p)=>{
         for (const i of p) {
             if (i.size <= fileSize) {
@@ -72,7 +77,10 @@ function Uploader({
         }
         return {...file};
     }
-
+    
+    /**
+     * Main Function.
+     */
     const newUpload=(f)=>{
         const {file: newFiles}=f.target;
         if (newFiles.length){
@@ -81,12 +89,18 @@ function Uploader({
             callUpdate(upFile);
         }
     }
-
+    
+    /**
+     * Main Function.
+     * Function for removing Item from the state
+     */
     const removeFile = (fileName) => {
         delete file[fileName];
         isFile({ ...file });
         callUpdate({ ...file });
     };
+
+    const sizeConvert = (bytes) => Math.round(bytes / fileSize);
 
     return (<> 
     <FileUploadContainer>
@@ -94,23 +108,23 @@ function Uploader({
         <DragDropText>Drag and drop your files anywhere or</DragDropText>
             <UploadFileBtn onClick={clicks} type="button">
             <i className="fas fa-file-upload" />
-            <span> Upload {otherProps.multiple ? "files" : "a file"}</span>
+            <span> Upload {propses.multiple ? "files" : "a file"}</span>
         </UploadFileBtn>
         <FormField
             type="file"
-            ref={fileInputField}
+                ref={field}
             title=""
             value=""
             onChange={newUpload}
-            {...otherProps}
+            {...propses}
         />
     </FileUploadContainer>
         <FilePreviewContainer>
             <span>To Upload</span>
             <PreviewList>
-                {Object.keys(files).map((fileName, index) => {
-                    let file = files[fileName];
-                    let isImageFile = file.type.split("/")[0] === "image";
+                {Object.keys(file).map((fileName, index) => {
+                    let allFile = file[fileName];
+                    let isImageFile = allFile.type.split("/")[0] === "image";
                     return (
                         <PreviewContainer key={fileName}>
                             <div>
@@ -121,9 +135,9 @@ function Uploader({
                                     />
                                 )}
                                 <FileMetaData isImageFile={isImageFile}>
-                                    <span>{file.name}</span>
+                                    <span>{allFile.name}</span>
                                     <aside>
-                                        <span>{convertBytesToKB(file.size)} kb</span>
+                                        <span>{sizeConvert(allFile.size)} kb</span>
                                         <RemoveFileIcon
                                             onClick={() => removeFile(fileName)}
                                             className="fas fa-trash-alt"
