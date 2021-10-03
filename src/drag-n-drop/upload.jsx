@@ -5,7 +5,6 @@ const convertSize=(k)=>Math.round(k/1000)
 
 function Upload({maxSize=500000,pushUp,...others}) {
     const [images, allImages] = useState({})
-
     useEffect(() => {
     }, [images])
 
@@ -54,7 +53,6 @@ function Upload({maxSize=500000,pushUp,...others}) {
                 <input id='file-upload' className='mainBox uploader' title='' value=''  onChange={uploadFile} type="file" {...others}/>
             </Form.Group>
             </section>
-
             <section>
                 <span>To Upload</span>
                 <ul className='upload-area' >
@@ -89,7 +87,7 @@ function Upload({maxSize=500000,pushUp,...others}) {
                     </li>
                 </ul>
             </section>
-       
+         
         </>
     )
 }
